@@ -6,8 +6,8 @@ from os import getenv
 from aiogram import Bot, Dispatcher
 
 from src.handlers.user import router as user_router
+from src.bot import bot
 
-bot = Bot(getenv('API_TOKEN'))
 dp = Dispatcher()
 
 
