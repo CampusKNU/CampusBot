@@ -15,11 +15,11 @@ class Event(BaseModel):
     date = Column(DateTime, nullable=False)
     to_created = Column(TIMESTAMP, nullable=False)
 
-    def __init__(self, title, description, link, date):
+    def __init__(self, title, description, link, date, photo_id=-1, status="announced"):
         self.title = title
         self.description = description
         self.link = link
-        self.photo_id = -1
-        self.status = "announced"
+        self.photo_id = photo_id
+        self.status = status
         self.date = date
         self.to_created = datetime.now()
