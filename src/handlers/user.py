@@ -114,6 +114,11 @@ async def events_list(message: Message):
 				])
 	else:
 		events_message = "Поки немає запланованих подій 😔"
+		try:
+			await message.edit_text(events_message)
+		except Exception as e:
+			await message.answer(events_message)
+		
 
 	inline_keyboard = InlineKeyboardMarkup(inline_keyboard=buttons)
 	try:
@@ -193,7 +198,7 @@ async def change_event_info(callback_query: CallbackQuery):
 async def select_event(message: Message):
 	upcoming_events = get_events()
 	if upcoming_events:
-		events_message = f"{MenuButtons.EVENTS}:\n"
+		events_message = f"Виберіть подію, яку хочете змінити:\n"
 		buttons = []
 		for event in upcoming_events:
 			buttons.append([
@@ -201,6 +206,10 @@ async def select_event(message: Message):
 			])
 	else:
 		events_message = "Поки немає запланованих подій 😔"
+		try:
+			await message.edit_text(events_message)
+		except Exception as e:
+			await message.answer(events_message)
 
 	inline_keyboard = InlineKeyboardMarkup(inline_keyboard=buttons)
 	try:
