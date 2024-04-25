@@ -11,7 +11,7 @@ class Message(BaseModel):
 
     text = Column(String, nullable=False)
     sender_id = Column(String, nullable=False)
-    chat_id = Column(Integer, ForeignKey("Chat.id"))
+    chat_id = Column(String, ForeignKey("Chat.id"))
     to_created = Column(TIMESTAMP, nullable=False)
 
     # virtual property

@@ -6,6 +6,7 @@ from os import getenv
 from aiogram import Bot, Dispatcher
 
 from src.handlers.user import router as user_router
+from src.handlers.admin import router as admin_router
 
 bot = Bot(getenv('API_TOKEN'))
 dp = Dispatcher()
@@ -13,6 +14,8 @@ dp = Dispatcher()
 
 async def main() -> None:
     dp.include_router(user_router)
+    dp.include_router(admin_router)
+
     await dp.start_polling(bot)
 
 

@@ -12,7 +12,7 @@ class MainInfo(BaseModel):
     link = Column(String, nullable=True)
     # id of parent button (MainInfo object)
     parent_id = Column(Integer, nullable=True)
-    to_updated = Column(TIMESTAMP, nullable=False)
+    to_updated = Column(TIMESTAMP, nullable=True)
 
     def __init__(self, title, description, link):
         self.title = title
