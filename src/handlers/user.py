@@ -26,22 +26,28 @@ async def command_start_handler(message: Message) -> None:
 
 @router.message(F.text, ~AdminFilter())
 async def command_text_handler(message: Message, state: FSMContext) -> None:
-    is_back = False
-    split_msg = message.text.split('"')
+    is_back = message.text == "↩️ Назад"
+    prev_level = None
 
-    if len(split_msg) > 1:
-        msg = str(split_msg[1])
-        is_back = True
+    if await state.get_data():
+        prev_level = (await state.get_data())['level']
+
+    print(prev_level)
+
+    if is_back and prev_level == -1:
+        await state.clear()
+        await command_start_handler(message)
     else:
-        msg = message.text
+        if is_back:
+            button = db_session.query(MainInfo).filter_by(id=prev_level).first()
+        else:
+            button = db_session.query(MainInfo).filter_by(title=message.text).first()
 
-    button = db_session.query(MainInfo).filter_by(title=msg).first()
-
-    if not button:
-        await message.answer("Unknown command!")
-    else:
-        if button.parent_id == -1:
-            await state.set_state(MultiLevelMenuFSM.menu)
+        if not button:
+            await message.answer("Unknown command!")
+        else:
+            if button.parent_id == -1:
+                await state.set_state(MultiLevelMenuFSM.menu)
 
         await state.update_data(level=button.parent_id)
         await message.answer(button.description, parse_mode=ParseMode.HTML, reply_markup=get_sub_menu(button, is_back))

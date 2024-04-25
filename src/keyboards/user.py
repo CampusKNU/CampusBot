@@ -44,8 +44,7 @@ def get_sub_menu(button: MainInfo, is_back: bool):
 
     # do not show `back` button, if keyboard is main
     if searched_id != -1:
-        parent_btn = db_session.query(MainInfo).filter_by(id=buttons[0].parent_id).first()
-        builder.row(KeyboardButton(text=f'↩️ Назад до "{parent_btn.title}"'))
+        builder.row(KeyboardButton(text='↩️ Назад'))
 
     markup = builder.as_markup()
     markup.resize_keyboard = True
